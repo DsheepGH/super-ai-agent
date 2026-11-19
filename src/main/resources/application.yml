@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: super-ai-agent
+  profiles:
+    active: local
+  datasource:
+    url: ${AI_PG_URL:jdbc:postgresql://192.168.142.128:5432/mydb}
+    username: ${AI_PG_USERNAME}
+    password: ${AI_PG_PASSWORD}
+  ai:
+    vectorstore:
+      # 默认使用 CounselingAppVectorStoreConfig 的内存向量库，PgVector 通过 pgvector profile 显式启用
+      type: none
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1024
+        max-document-batch-size: 10 # DashScope Embedding API accepts at most 10 documents per request
+        initialize-schema: true
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+# SpringDoc OpenAPI 接口文档配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.agent.superaiagent.controller
+# Knife4j 接口文档配置
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+#searchApi
+search-api:
+  api-key: ${SEARCH_API_KEY:}

@@ -1,0 +1,36 @@
+spring:
+  ai:
+    dashscope:
+      api-key: ${DASHSCOPE_API_KEY}
+      chat:
+        options:
+          model: ${DASHSCOPE_CHAT_MODEL:qwen-max}
+    mcp:
+      client:
+        enabled: false
+    vectorstore:
+      type: none
+  datasource:
+    url: jdbc:postgresql://192.168.142.128:5432/mydb
+    username: ${AI_PG_USERNAME}
+    password: ${AI_PG_PASSWORD}
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+  tomcat:
+    # 小规格实例下线程数不必太多，减少启动与内存开销
+    threads:
+      max: 50
+      min-spare: 5
+
+# 线上不需要接口文档，关掉可省掉一轮控制器扫描，也能避免接口暴露
+springdoc:
+  api-docs:
+    enabled: false
+knife4j:
+  enable: false
+
+logging:
+  level:
+    root: info

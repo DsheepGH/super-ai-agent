@@ -1,0 +1,21 @@
+# 依赖与构建产物
+node_modules
+dist
+
+# 版本控制与本地配置
+.git
+.gitignore
+.vscode
+.idea
+*.log
+
+# 本地环境变量（保留 .env.development / .env.production 供 Vite 构建使用）
+.env
+.env.local
+.env.*.local
+
+# 文档、截图与临时产物
+docs
+artifacts
+README.md
+IMG_6858.JPG
